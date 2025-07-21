@@ -36,14 +36,21 @@ body, html {
     color: #fff;
     min-height: 100vh;
     overflow: hidden;
-    /* Mobil uyumluluk için ekstra ayarlar */
+    /* Mobil uyumluluk için güçlü ayarlar */
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    touch-action: manipulation;
+    touch-action: none;
     -webkit-overflow-scrolling: touch;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
 }
 
 .background {
@@ -581,12 +588,27 @@ body, html {
     }
 }
 
-/* Scroll alanları için özel optimizasyon */
+/* Scroll alanları için özel optimizasyon - GÜÇLENDİRİLDİ */
 .password-panel-content, .share-questions-container {
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
+    overflow-x: hidden;
     overscroll-behavior: contain;
     touch-action: pan-y;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Ana container'ları tamamen sabitlenmış yap */
+.center-panel, .background {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    touch-action: none !important;
 }
 
 /* Mobil keyboard için input düzeltmeleri */

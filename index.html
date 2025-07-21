@@ -263,13 +263,23 @@
     }, { passive: true });
     
     document.addEventListener('touchmove', function(e) {
-        // Scroll davranışını engelle (ana sayfa kaymasını önlemek için)
-        if (e.target.closest('.password-panel-content') || 
-            e.target.closest('.share-questions-container')) {
-            // Scroll olması gereken alanlar için izin ver
-            return;
-        }
+        // TÜM touch move'ları engelle - güçlü kayma önleme
         e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }, { passive: false });
+    
+    // Wheel event için de engelleme
+    document.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        return false;
+    }, { passive: false });
+    
+    // Scroll engelleme
+    document.addEventListener('scroll', function(e) {
+        window.scrollTo(0, 0);
+        e.preventDefault();
+        return false;
     }, { passive: false });
     
     // Zoom engelleme (double tap zoom)
