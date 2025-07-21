@@ -249,12 +249,19 @@
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
         
-        // Font scaling zorla engelle (telefon yazı boyutu yok sayılsın)
-        document.documentElement.style.webkitTextSizeAdjust = 'none';
-        document.documentElement.style.mozTextSizeAdjust = 'none';
-        document.documentElement.style.msTextSizeAdjust = 'none';
-        document.documentElement.style.textSizeAdjust = 'none';
-        document.body.style.zoom = '1';
+        // Font scaling hafif kontrol (tamamen engelleme değil)
+        document.documentElement.style.webkitTextSizeAdjust = '85%';
+        document.documentElement.style.mozTextSizeAdjust = '85%';
+        document.documentElement.style.msTextSizeAdjust = '85%';
+        document.documentElement.style.textSizeAdjust = '85%';
+        
+        // Ana panelin görünür olduğundan emin ol
+        const mainPanel = document.getElementById('main-panel');
+        if (mainPanel) {
+            mainPanel.style.display = 'flex';
+            mainPanel.style.visibility = 'visible';
+            mainPanel.style.opacity = '1';
+        }
     }
     
     // Sayfa yüklendiğinde ve resize edildiğinde çalıştır
@@ -270,24 +277,26 @@
     }, { passive: true });
     
     document.addEventListener('touchmove', function(e) {
-        // TÜM touch move'ları engelle - güçlü kayma önleme
+        // Sadece ana sayfa kaydırmasını engelle, UI etkileşimlerini engelleme
+        if (e.target.closest('.password-panel-content') || 
+            e.target.closest('.share-questions-container') ||
+            e.target.closest('.main-btn-svg') ||
+            e.target.closest('.start-svg') ||
+            e.target.closest('.password-check-btn') ||
+            e.target.closest('.phishing-button')) {
+            // UI elementleri için dokunmatik izin ver
+            return;
+        }
+        // Ana sayfa kaydırmasını engelle
         e.preventDefault();
-        e.stopPropagation();
-        return false;
     }, { passive: false });
     
-    // Wheel event için de engelleme
-    document.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        return false;
-    }, { passive: false });
-    
-    // Scroll engelleme
+    // Scroll'u hafif engelle
     document.addEventListener('scroll', function(e) {
-        window.scrollTo(0, 0);
-        e.preventDefault();
-        return false;
-    }, { passive: false });
+        if (window.scrollY !== 0) {
+            window.scrollTo(0, 0);
+        }
+    }, { passive: true });
     
     // Zoom engelleme (double tap zoom)
     let lastTouchEnd = 0;

@@ -36,27 +36,24 @@ body, html {
     color: #fff;
     min-height: 100vh;
     overflow: hidden;
-    /* Mobil uyumluluk için güçlü ayarlar */
+    /* Mobil uyumluluk için DÜZELTME - daha yumuşak */
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
-    touch-action: none;
+    touch-action: manipulation;
     -webkit-overflow-scrolling: touch;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
-    /* FONT SCALING ENGELLEMESİ - telefon yazı boyutunu yok say */
-    -webkit-text-size-adjust: none !important;
-    -moz-text-size-adjust: none !important;
-    -ms-text-size-adjust: none !important;
-    text-size-adjust: none !important;
-    zoom: 1 !important;
-    -webkit-user-zoom: fixed !important;
-    -moz-user-zoom: fixed !important;
+    /* Font scaling - daha esnek hale getirildi */
+    -webkit-text-size-adjust: 80% !important;
+    -moz-text-size-adjust: 80% !important;
+    -ms-text-size-adjust: 80% !important;
+    text-size-adjust: 80% !important;
 }
 
 .background {
@@ -104,7 +101,14 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    box-sizing: border-box;
+    padding: 20px;
 }
 
 .main-title-panel {
@@ -255,78 +259,68 @@ body, html {
     max-width: 340px;
 }
 
-/* Mobil ve tablet uyumluluğu */
+/* Mobil ve tablet uyumluluğu - YENİDEN DÜZENLEME */
 @media (max-width: 700px) {
-    /* Body ve HTML mobil güvenlik */
-    body, html {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        -webkit-overflow-scrolling: touch;
-        touch-action: manipulation;
-    }
-    
-    .background {
-        /* Mobile viewport height fix */
-        height: 100vh;
-        height: calc(var(--vh, 1vh) * 100);
-        min-height: -webkit-fill-available;
+    /* Center panel mobil düzeltmesi */
+    .center-panel {
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 10px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
     
     .main-title-panel {
-        width: 98vw;
-        height: 60vw;
-        min-height: 260px;
-        max-height: 70vh;
-    }
-    .inside-panel {
-        width: 95%;
-        gap: 10px;
-    }
-    .main-btn-svg, .start-svg {
-        max-width: 98vw;
-        min-height: 44px; /* Touch target minimum */
-        touch-action: manipulation;
-    }
-    .logo {
-        width: 70px;
-        top: 12px;
-        left: 12px;
-    }
-    .scoreboard {
-        right: 15px;
-        bottom: 15px;
-        padding: 8px 10px;
-    }
-    .background-img {
-        width: 100vw;
-        height: 100vh;
-        height: calc(var(--vh, 1vh) * 100);
-        object-fit: cover;
-        object-position: center center;
-        opacity: 0.95;
-        min-width: 100vw;
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
-    }
-    .panel-desc {
-        font-size: 1rem;
-        line-height: 1.4;
+        width: 95vw !important;
+        max-width: 500px !important;
+        height: auto !important;
+        min-height: 300px !important;
+        max-height: 75vh !important;
     }
     
-    /* Input alanları mobil optimizasyonu */
+    .inside-panel {
+        width: 90% !important;
+        gap: 15px !important;
+        padding: 20px !important;
+    }
+    
+    .panel-desc {
+        font-size: 0.9rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .main-btn-svg, .start-svg {
+        width: 95% !important;
+        max-width: 300px !important;
+        min-height: 50px !important;
+        touch-action: manipulation;
+        margin: 5px auto !important;
+    }
+    
+    /* Logo ve skor tablosu küçült */
+    .logo {
+        width: 60px;
+        top: 10px;
+        left: 10px;
+    }
+    
+    .scoreboard {
+        right: 10px;
+        bottom: 10px;
+    }
+    
+    .scoreboard-img {
+        width: 150px;
+    }
+    
+    /* Input optimizasyonu */
     .username-input-on-svg {
         font-size: 16px; /* iOS zoom engellemek için */
         touch-action: manipulation;
         -webkit-appearance: none;
         border-radius: 0;
-    }
-    
-    /* Touch target minimum boyutları */
-    .main-btn-svg, .start-svg, .password-check-btn, .phishing-button {
-        min-height: 44px;
-        touch-action: manipulation;
     }
 }
 
@@ -606,31 +600,32 @@ body, html {
     box-sizing: border-box;
 }
 
-/* Ana container'ları tamamen sabitlenmış yap */
-.center-panel, .background {
+/* Background sabit kalacak, center-panel esnek olacak */
+.background {
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
     height: 100vh !important;
     overflow: hidden !important;
-    touch-action: none !important;
-    /* Font scaling engelleme */
-    -webkit-text-size-adjust: none !important;
-    -moz-text-size-adjust: none !important;
-    -ms-text-size-adjust: none !important;
-    text-size-adjust: none !important;
+    touch-action: manipulation !important;
 }
 
-/* TÜM UI elementlerinde font scaling engelleme */
-.main-title-panel, .inside-panel, .panel-desc, .main-buttons, 
-.main-btn-svg, .start-svg, .password-panel-outer, .password-panel-content,
-.password-title, .password-desc, .svg-text, .username-input-on-svg {
-    -webkit-text-size-adjust: none !important;
-    -moz-text-size-adjust: none !important;
-    -ms-text-size-adjust: none !important;
-    text-size-adjust: none !important;
-    zoom: 1 !important;
+/* Ana panel düzeltmeleri - daha görünür */
+.main-title-panel {
+    width: 90vw !important;
+    max-width: 600px !important;
+    height: auto !important;
+    min-height: 400px !important;
+    max-height: 80vh !important;
+}
+
+/* UI elementlerinde hafif font scaling izni */
+.panel-desc, .password-title, .password-desc, .svg-text {
+    -webkit-text-size-adjust: 90% !important;
+    -moz-text-size-adjust: 90% !important;
+    -ms-text-size-adjust: 90% !important;
+    text-size-adjust: 90% !important;
 }
 
 /* Mobil keyboard için input düzeltmeleri */
