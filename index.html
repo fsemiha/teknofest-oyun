@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Siber Macera</title>
     <!-- Font preload for faster loading -->
     <link rel="preload" href="fonts/Gilmer Regular.otf" as="font" type="font/otf" crossorigin>
@@ -243,6 +243,45 @@
     </div>
 
     <script>
+    // Mobil cihazlar için viewport height düzeltmesi
+    function setMobileViewportHeight() {
+        // iOS Safari ve diğer mobil tarayıcılar için 100vh problemi çözümü
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    // Sayfa yüklendiğinde ve resize edildiğinde çalıştır
+    setMobileViewportHeight();
+    window.addEventListener('resize', setMobileViewportHeight);
+    window.addEventListener('orientationchange', function() {
+        setTimeout(setMobileViewportHeight, 100);
+    });
+    
+    // Touch event passive listeners (performans için)
+    document.addEventListener('touchstart', function(e) {
+        // Touch start handling - hiçbir şey yapma, sadece passive listener
+    }, { passive: true });
+    
+    document.addEventListener('touchmove', function(e) {
+        // Scroll davranışını engelle (ana sayfa kaymasını önlemek için)
+        if (e.target.closest('.password-panel-content') || 
+            e.target.closest('.share-questions-container')) {
+            // Scroll olması gereken alanlar için izin ver
+            return;
+        }
+        e.preventDefault();
+    }, { passive: false });
+    
+    // Zoom engelleme (double tap zoom)
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+        let now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+    
     // Firebase Configuration - teknofest projesi
     const firebaseConfig = {
         apiKey: "AIzaSyB3ofVngr1rY6Zr2bTSE3PRFT1z104nMXo",

@@ -36,14 +36,27 @@ body, html {
     color: #fff;
     min-height: 100vh;
     overflow: hidden;
+    /* Mobil uyumluluk için ekstra ayarlar */
+    position: fixed;
+    width: 100%;
+    touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .background {
     width: 100vw;
     height: 100vh;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     overflow: hidden;
     background: linear-gradient(135deg, #0a1428 0%, #1a2844 50%, #2a3c66 100%);
+    /* Mobil için ekstra güvenlik */
+    touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
 }
 
 .background-img {
@@ -229,11 +242,30 @@ body, html {
     max-width: 340px;
 }
 
+/* Mobil ve tablet uyumluluğu */
 @media (max-width: 700px) {
+    /* Body ve HTML mobil güvenlik */
+    body, html {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+        touch-action: manipulation;
+    }
+    
+    .background {
+        /* Mobile viewport height fix */
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        min-height: -webkit-fill-available;
+    }
+    
     .main-title-panel {
         width: 98vw;
         height: 60vw;
         min-height: 260px;
+        max-height: 70vh;
     }
     .inside-panel {
         width: 95%;
@@ -241,6 +273,8 @@ body, html {
     }
     .main-btn-svg, .start-svg {
         max-width: 98vw;
+        min-height: 44px; /* Touch target minimum */
+        touch-action: manipulation;
     }
     .logo {
         width: 70px;
@@ -255,14 +289,31 @@ body, html {
     .background-img {
         width: 100vw;
         height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
         object-fit: cover;
         object-position: center center;
         opacity: 0.95;
         min-width: 100vw;
         min-height: 100vh;
+        min-height: -webkit-fill-available;
     }
     .panel-desc {
         font-size: 1rem;
+        line-height: 1.4;
+    }
+    
+    /* Input alanları mobil optimizasyonu */
+    .username-input-on-svg {
+        font-size: 16px; /* iOS zoom engellemek için */
+        touch-action: manipulation;
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+    
+    /* Touch target minimum boyutları */
+    .main-btn-svg, .start-svg, .password-check-btn, .phishing-button {
+        min-height: 44px;
+        touch-action: manipulation;
     }
 }
 
@@ -530,8 +581,48 @@ body, html {
     }
 }
 
+/* Scroll alanları için özel optimizasyon */
+.password-panel-content, .share-questions-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+}
+
+/* Mobil keyboard için input düzeltmeleri */
+@media (max-width: 500px) {
+    .username-input-on-svg, .password-input {
+        font-size: 16px !important; /* iOS zoom engellemek için */
+        -webkit-appearance: none;
+        border-radius: 0;
+        transform: translateZ(0); /* Hardware acceleration */
+    }
+    
+    /* Viewport height mobile fix için ekstra */
+    .center-panel {
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+        width: 100vw;
+        max-height: -webkit-fill-available;
+    }
+    
+    .password-panel-outer {
+        max-height: calc(var(--vh, 1vh) * 95);
+        max-height: -webkit-fill-available;
+    }
+}
+
 /* Çok küçük ekranlar için ekstra güvenlik */
 @media (max-width: 400px) {
+    /* Body mobile fix */
+    body {
+        position: fixed;
+        height: 100%;
+        height: calc(var(--vh, 1vh) * 100);
+        height: -webkit-fill-available;
+        overflow: hidden;
+    }
+    
     .password-panel-top {
         top: 80px;
         padding: 0 40px;
@@ -543,18 +634,51 @@ body, html {
     }
     .password-panel-content {
         top: 85px;
+        max-height: calc(var(--vh, 1vh) * 60);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     #share-panel .password-panel-content, #phishing-panel .password-panel-content {
         top: 85px;
+        max-height: calc(var(--vh, 1vh) * 60);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     .password-panel-outer {
-        height: 420px;
+        height: calc(var(--vh, 1vh) * 80);
+        min-height: 400px;
+        max-height: calc(var(--vh, 1vh) * 95);
     }
     .svg-box {
         width: 25vw;
         max-width: 120px;
         min-width: 80px;
         height: 45px;
+    }
+    
+    /* Touch targets için ekstra boyut */
+    .main-btn-svg, .start-svg, .password-check-btn, .phishing-button {
+        min-height: 48px;
+        padding: 4px;
+    }
+}
+
+/* Landscape mode düzeltmeleri */
+@media (max-height: 500px) and (orientation: landscape) {
+    .password-panel-outer {
+        height: 90vh;
+        height: calc(var(--vh, 1vh) * 90);
+    }
+    
+    .password-panel-content, #share-panel .password-panel-content, #phishing-panel .password-panel-content {
+        max-height: calc(var(--vh, 1vh) * 60);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .main-title-panel {
+        height: 70vh;
+        height: calc(var(--vh, 1vh) * 70);
     }
 }
 
