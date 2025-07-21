@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no, target-densitydpi=device-dpi">
     <title>Siber Macera</title>
     <!-- Font preload for faster loading -->
     <link rel="preload" href="fonts/Gilmer Regular.otf" as="font" type="font/otf" crossorigin>
@@ -248,6 +248,13 @@
         // iOS Safari ve diğer mobil tarayıcılar için 100vh problemi çözümü
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        // Font scaling zorla engelle (telefon yazı boyutu yok sayılsın)
+        document.documentElement.style.webkitTextSizeAdjust = 'none';
+        document.documentElement.style.mozTextSizeAdjust = 'none';
+        document.documentElement.style.msTextSizeAdjust = 'none';
+        document.documentElement.style.textSizeAdjust = 'none';
+        document.body.style.zoom = '1';
     }
     
     // Sayfa yüklendiğinde ve resize edildiğinde çalıştır

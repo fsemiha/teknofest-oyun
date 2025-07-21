@@ -49,8 +49,14 @@ body, html {
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
+    /* FONT SCALING ENGELLEMESİ - telefon yazı boyutunu yok say */
+    -webkit-text-size-adjust: none !important;
+    -moz-text-size-adjust: none !important;
+    -ms-text-size-adjust: none !important;
+    text-size-adjust: none !important;
+    zoom: 1 !important;
+    -webkit-user-zoom: fixed !important;
+    -moz-user-zoom: fixed !important;
 }
 
 .background {
@@ -609,6 +615,22 @@ body, html {
     height: 100vh !important;
     overflow: hidden !important;
     touch-action: none !important;
+    /* Font scaling engelleme */
+    -webkit-text-size-adjust: none !important;
+    -moz-text-size-adjust: none !important;
+    -ms-text-size-adjust: none !important;
+    text-size-adjust: none !important;
+}
+
+/* TÜM UI elementlerinde font scaling engelleme */
+.main-title-panel, .inside-panel, .panel-desc, .main-buttons, 
+.main-btn-svg, .start-svg, .password-panel-outer, .password-panel-content,
+.password-title, .password-desc, .svg-text, .username-input-on-svg {
+    -webkit-text-size-adjust: none !important;
+    -moz-text-size-adjust: none !important;
+    -ms-text-size-adjust: none !important;
+    text-size-adjust: none !important;
+    zoom: 1 !important;
 }
 
 /* Mobil keyboard için input düzeltmeleri */
